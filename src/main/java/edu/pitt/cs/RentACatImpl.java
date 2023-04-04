@@ -6,6 +6,7 @@ import java.util.Scanner;
 public class RentACatImpl implements RentACat {
 
 	private ArrayList<Cat> cats = new ArrayList<Cat>();
+	//private ArrayList<String> catList = new ArrayList<String>();
 
 	/**
 	 * Return a cat. This should call the .returnCat() method on the cat for the
@@ -18,7 +19,12 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean returnCat(int id) {
-		// TODO
+		Cat c = getCat(id);
+		if (c != null && c.getRented()) {
+			//System.out.println("Returning cat " + id);
+			c.returnCat();
+			return true;
+		}
 		return false;
 	}
 
@@ -33,7 +39,12 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean rentCat(int id) {
-		// TODO
+		Cat c = getCat(id);
+		if (c != null && !c.getRented()) {
+			//System.out.println("Cat exists and is not rented. Trying to rent:");
+			c.rentCat();
+			return true;
+		} 
 		return false;
 	}
 
@@ -47,9 +58,20 @@ public class RentACatImpl implements RentACat {
 	 * @return "\n"-delimited list of rentable cats
 	 */
 
-	public String listCats() {
-		// TODO
-		return "WRITE CODE FOR THIS";
+	public String listCats() { 
+		String catList = "";
+		if (cats == null || cats.size() == 0) {
+			return catList;
+		}
+		for (Cat c : cats) {
+			if (!c.getRented()) {
+				catList += c.toString();
+				//System.out.println(c.toString());
+				catList += "\n";
+			}
+		}
+		//System.out.println(catList);
+		return catList;
 	}
 
 	/**
@@ -62,7 +84,12 @@ public class RentACatImpl implements RentACat {
 	 */
 
 	public boolean catExists(int id) {
-		// TODO
+		Cat c = getCat(id);
+		if (c != null) {
+			//System.out.println("Cat with ID " + id + " exists");
+			return true;
+		}
+		//System.out.println("Cat with ID " + id + " does not exist");
 		return false;
 	}
 
@@ -87,9 +114,10 @@ public class RentACatImpl implements RentACat {
 			return false;
 		} else if (c.getRented()) {
 			// This cat exists, but has already been rented
+			//System.out.println("ID: " + id + " " + c.getRented());
 			return false;
 		}
-
+		//System.out.println("ID: " + id + " " + c.getRented());
 		// If cat exists and is not rented, then the cat
 		// is available to rent
 		return true;
