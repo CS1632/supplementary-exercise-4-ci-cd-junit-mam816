@@ -49,9 +49,11 @@ public class Cat {
 	 */
 
 	public void rentCat() {
+		//System.out.println("Inside c.rentCat");
 		if (bugInjectionOn) {
 			throw new UnsupportedOperationException("Injected bug for rentCat()");
 		}
+		//System.out.println("RENTED SHOULD BE TRUE NOW!!!!");
 		rented = true;
 	}
 
@@ -99,6 +101,7 @@ public class Cat {
 	 */
 
 	public boolean getRented() {
+		//System.out.println("Inside c.getRented");
 		if (bugInjectionOn) {
 			throw new UnsupportedOperationException("Injected bug for getRented()");
 		}
